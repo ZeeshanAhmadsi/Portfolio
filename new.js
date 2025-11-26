@@ -134,28 +134,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Disable heavy JS-driven effects on smaller devices
     if (isSmall) {
-        // Remove parallax and mousemove effects if they exist
-        if (window.parallax && typeof window.parallax === 'function') {
-            window.removeEventListener && window.removeEventListener('scroll', parallax);
-        }
-        // If videoManager exists, avoid initializing heavy video logic on small devices
-        if (typeof videoManager !== 'undefined' && videoManager && videoManager.videos) {
-            // Pause and hide existing videos
-            try {
-                document.querySelectorAll('.video-background video').forEach(v => {
-                    v.pause();
-                    v.removeAttribute && v.removeAttribute('autoplay');
-                    v.style.display = 'none';
-                });
-            } catch (e) {}
-        }
+        // expose flags for other init code to read
+        window.__isSmall = true;
+        window.__disableTyping = true;
 
-        // Stop resource-heavy animations triggered by JS
-        // For typing animation, reduce tick intervals by stopping it (cleaner on small screens)
-        if (typeof typingAnimation === 'function') {
-            // override with a no-op to avoid repeated timeouts
-            typingAnimation = function(){};
-        }
+        // If video elements exist, pause and hide them to reduce CPU/paint
+        try {
+            document.querySelectorAll('.video-background video').forEach(v => {
+                try { v.pause(); } catch(e){}
+                v.removeAttribute && v.removeAttribute('autoplay');
+                v.style.display = 'none';
+            });
+        } catch (e) {}
     }
 
     // Keep terminal/image toggles accessible but lightweight
@@ -544,6 +534,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Update the typing animation
 const typingAnimation = () => {
+    if (window.__disableTyping) return;
     const texts = [
         'Zeeshan Ahmad Siddiqui',
         'Full Stack Developer'
@@ -883,15 +874,25 @@ document.addEventListener('DOMContentLoaded', function() {
         terminalContainer.style.zIndex = '1000';
     }
     
-    // Initialize all features
-    videoManager.init();
-    typingAnimation();
+    // Initialize all features (skip heavy ones on small devices)
+    const __isSmall = window.__isSmall || window.innerWidth <= 1024;
+    if (!__isSmall) {
+        try { videoManager.init(); } catch(e) {}
+    }
+
+    if (!window.__disableTyping) {
+        try { typingAnimation(); } catch(e) {}
+    }
+
     createObserver(document.querySelectorAll('.section'), 'visible');
     createObserver(document.querySelectorAll('.skill-item'), 'fade-in');
     createObserver(document.querySelectorAll('.project-card'), 'scale-in');
-    parallax();
-    navbarEffect();
-    mouseMoveEffect();
+
+    if (!__isSmall) {
+        try { parallax(); } catch(e) {}
+        try { navbarEffect(); } catch(e) {}
+        try { mouseMoveEffect(); } catch(e) {}
+    }
     
     // Smooth scroll for navigation
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
