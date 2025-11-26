@@ -535,6 +535,16 @@ document.addEventListener('DOMContentLoaded', function() {
 // Update the typing animation
 const typingAnimation = () => {
     if (window.__disableTyping) return;
+    const isSmall = window.innerWidth <= 1024;
+    const animatedText = document.querySelector('.animated-text');
+    if (!animatedText) return;
+
+    // On mobile, just display the full text without animation
+    if (isSmall) {
+        animatedText.textContent = 'Zeeshan Ahmad Siddiqui';
+        return;
+    }
+
     const texts = [
         'Zeeshan Ahmad Siddiqui',
         'Full Stack Developer'
@@ -542,20 +552,17 @@ const typingAnimation = () => {
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    const animatedText = document.querySelector('.animated-text');
-    const typingDelay = 100; // Delay between each character
-    const erasingDelay = 50;  // Faster deletion
-    const newTextDelay = 1000; // Delay before starting to erase
+    const typingDelay = 100;
+    const erasingDelay = 50;
+    const newTextDelay = 1000;
 
     function type() {
         const currentText = texts[textIndex];
         
         if (isDeleting) {
-            // Removing characters
             animatedText.textContent = currentText.substring(0, charIndex - 1);
             charIndex--;
         } else {
-            // Adding characters
             animatedText.textContent = currentText.substring(0, charIndex + 1);
             charIndex++;
         }
@@ -563,13 +570,10 @@ const typingAnimation = () => {
         let typeSpeed = isDeleting ? erasingDelay : typingDelay;
 
         if (!isDeleting && charIndex === currentText.length) {
-            // Finished typing
             typeSpeed = newTextDelay;
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
-            // Finished deleting
             isDeleting = false;
-            // Switch to next text
             textIndex = (textIndex + 1) % texts.length;
             typeSpeed = 500;
         }
@@ -577,7 +581,6 @@ const typingAnimation = () => {
         setTimeout(type, typeSpeed);
     }
 
-    // Start the animation
     type();
 };
 
