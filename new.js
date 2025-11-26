@@ -85,6 +85,42 @@ terminalToggle.addEventListener('click', () => {
     }
 });
 
+// Mobile menu toggle (keeps nav usable on small screens)
+document.addEventListener('DOMContentLoaded', () => {
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    const navContainer = document.querySelector('.nav-container');
+    if (!mobileBtn || !navContainer) return;
+
+    mobileBtn.addEventListener('click', () => {
+        navContainer.classList.toggle('active');
+        // toggle icon between bars and times if FontAwesome available
+        const icon = mobileBtn.querySelector('i');
+        if (icon) {
+            if (navContainer.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+    });
+
+    // close menu when a link is clicked (mobile)
+    navContainer.querySelectorAll && navContainer.querySelectorAll('a.nav-link').forEach(a => {
+        a.addEventListener('click', () => {
+            if (navContainer.classList.contains('active')) {
+                navContainer.classList.remove('active');
+                const icon = mobileBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
+        });
+    });
+});
+
 // Terminal close
 terminalClose.addEventListener('click', () => {
     terminal.classList.remove('active');

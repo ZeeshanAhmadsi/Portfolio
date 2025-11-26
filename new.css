@@ -6368,3 +6368,50 @@ footer {
         font-size: 0.9rem;
     }
 }
+
+/* Small responsive helpers (added) */
+/* Make images fluid by default so fixed width/height attrs don't break layout */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Profile image: keep it visually balanced on small screens */
+.profile-image img {
+    width: 100%;
+    height: auto;
+    max-width: 360px;
+    margin: 0 auto;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Ensure the fixed header doesn't cover content on smaller viewports */
+.page-wrapper {
+    padding-top: 80px; /* matches header height */
+}
+
+@media (max-width: 480px) {
+    header {
+        height: 64px;
+    }
+
+    .page-wrapper {
+        padding-top: 64px;
+    }
+
+    .resume-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    /* Slightly reduce hero paddings on very small screens */
+    .hero-section {
+        padding: 80px 0 24px;
+    }
+
+    .hero-content {
+        padding: 1rem;
+    }
+}
