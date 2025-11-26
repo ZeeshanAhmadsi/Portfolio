@@ -91,33 +91,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const navContainer = document.querySelector('.nav-container');
     if (!mobileBtn || !navContainer) return;
 
-    mobileBtn.addEventListener('click', () => {
+    // Toggle menu on button click
+    mobileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         navContainer.classList.toggle('active');
-        // toggle icon between bars and times if FontAwesome available
         const icon = mobileBtn.querySelector('i');
         if (icon) {
-            if (navContainer.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         }
     });
 
-    // close menu when a link is clicked (mobile)
-    navContainer.querySelectorAll && navContainer.querySelectorAll('a.nav-link').forEach(a => {
+    // Close menu when a link is clicked
+    navContainer.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => {
+            navContainer.classList.remove('active');
+            const icon = mobileBtn.querySelector('i');
+            if (icon) {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            }
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navContainer.contains(e.target) && !mobileBtn.contains(e.target)) {
             if (navContainer.classList.contains('active')) {
                 navContainer.classList.remove('active');
                 const icon = mobileBtn.querySelector('i');
                 if (icon) {
-                    icon.classList.remove('fa-times');
                     icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
                 }
             }
-        });
+        }
     });
 });
 

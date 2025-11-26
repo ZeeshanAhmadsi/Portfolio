@@ -285,7 +285,7 @@ nav {
     font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: 20px;
-    transition: all 0.3s ease;
+    transition: color 0.2s ease;
     position: relative;
 }
 
@@ -302,8 +302,7 @@ nav {
     width: 0;
     height: 2px;
     background: var(--gradient-primary);
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    transition: width 0.3s ease;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
 }
@@ -588,61 +587,92 @@ nav {
 /* Responsive Design */
 @media (max-width: 768px) {
     .mobile-menu-btn {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        order: 2;
     }
 
     .nav-container {
         position: fixed;
         top: 80px;
-        right: -100%;
-        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
         height: calc(100vh - 80px);
-        background-color: rgba(17, 24, 39, 0.95);
-        -webkit-backdrop-filter: blur(10px);
-        backdrop-filter: blur(10px);
-        -webkit-transition: right 0.3s ease;
-        transition: right 0.3s ease;
+        background-color: rgba(17, 24, 39, 0.98);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        z-index: 99;
     }
 
     .nav-container.active {
-        right: 0;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
     }
 
     .nav-links {
         flex-direction: column;
         width: 100%;
-        padding: 1rem;
+        padding: 1.5rem 0;
         background: none;
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
+        border: none;
+        border-radius: 0;
     }
 
     .nav-link {
         width: 100%;
         text-align: center;
-        padding: 1rem;
+        padding: 1.2rem;
+        border-radius: 0;
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: none;
+    }
+
+    .nav-link::after {
+        display: none !important;
     }
 
     .resume-button {
-        margin-top: 1rem;
+        margin: 1.5rem auto;
+        display: block;
+        width: fit-content;
     }
 
     .hero-section {
-        padding: 100px 0 40px;
+        padding: 80px 0 30px;
     }
 
     .hero-content {
         padding: 1.5rem;
-        margin: 0 1rem;
+        margin: 0 auto;
     }
 
     .hero-title {
-        font-size: clamp(2rem, 4vw, 3rem);
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        line-height: 1.6;
     }
 
     .animated-text {
-        display: block;
-        margin-top: 0.5rem;
+        display: inline;
+        margin-top: 0;
     }
 
     .footer-links {
@@ -6401,25 +6431,53 @@ img {
         padding-top: 64px;
     }
 
+    .logo-section .logo {
+        font-size: 1.1rem;
+    }
+
     .resume-button {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+
+    .resume-button i {
+        font-size: 0.9rem;
     }
 
     /* Slightly reduce hero paddings on very small screens */
     .hero-section {
-        padding: 80px 0 24px;
+        padding: 70px 0 20px;
     }
 
     .hero-content {
         padding: 1rem;
+    }
+
+    .hero-title {
+        font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
     }
 }
 
 /* Performance and tablet/mobile optimizations */
 @media (max-width: 1024px) {
     /* Avoid heavy backdrop filters and large shadows on tablets/phones */
-    .glass, .card-hover, header, .nav-links, .nav-container, .resume-button, .about-content, .project-card, .hobby-card {
+    .glass, .card-hover, header, .nav-links, .resume-button, .about-content, .project-card, .hobby-card {
         -webkit-backdrop-filter: none !important;
         backdrop-filter: none !important;
         box-shadow: none !important;
@@ -6427,11 +6485,27 @@ img {
         background: rgba(17,24,39,0.85) !important;
     }
 
-    /* Disable all animations on mobile/tablet */
-    * {
+    /* Disable expensive animations but keep nav smooth */
+    *:not(.nav-container) {
         animation: none !important;
-        transition: none !important;
-        will-change: auto !important;
+    }
+
+    /* Keep nav menu smooth transition */
+    .nav-container {
+        transition: transform 0.3s ease !important;
+    }
+
+    /* Remove transform effects on hover */
+    .nav-link:hover {
+        transform: none !important;
+    }
+
+    .card-hover:hover {
+        transform: none !important;
+    }
+
+    .project-card:hover {
+        transform: none !important;
     }
 
     /* Ensure animated text is static on mobile */
