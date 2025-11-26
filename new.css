@@ -6415,3 +6415,60 @@ img {
         padding: 1rem;
     }
 }
+
+/* Performance and tablet/mobile optimizations */
+@media (max-width: 1024px) {
+    /* Avoid heavy backdrop filters and large shadows on tablets/phones */
+    .glass, .card-hover, header, .nav-links, .nav-container, .resume-button, .about-content, .project-card, .hobby-card {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(255,255,255,0.04) !important;
+        background: rgba(17,24,39,0.85) !important;
+    }
+
+    /* Reduce animations that are costly */
+    * {
+        animation-duration: 0s !important;
+        transition-duration: 0.15s !important;
+        will-change: auto !important;
+    }
+
+    /* Stop hero parallax & transformations on smaller devices */
+    .hero-section {
+        transform: none !important;
+        will-change: auto !important;
+    }
+
+    /* Disable video backgrounds on smaller screens */
+    .video-background, .video-container {
+        display: none !important;
+    }
+
+    /* Simplify skills area: make it static grid instead of sliding carousel */
+    .skills-grid, .skills-container {
+        animation: none !important;
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+        gap: 1rem !important;
+        overflow: visible !important;
+    }
+
+    /* Reduce project image height to save repaint cost */
+    .project-image {
+        height: 160px !important;
+    }
+
+    /* Reduce terminal visuals */
+    .terminal-toggle {
+        display: none !important;
+    }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}

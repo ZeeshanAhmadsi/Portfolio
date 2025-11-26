@@ -121,6 +121,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Performance improvements for mobile/tablet
+document.addEventListener('DOMContentLoaded', () => {
+    const isSmall = window.innerWidth <= 1024;
+
+    // Lazy-load images to reduce initial load and repaint cost
+    try {
+        document.querySelectorAll('img').forEach(img => {
+            if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    } catch (e) { /* ignore */ }
+
+    // Disable heavy JS-driven effects on smaller devices
+    if (isSmall) {
+        // Remove parallax and mousemove effects if they exist
+        if (window.parallax && typeof window.parallax === 'function') {
+            window.removeEventListener && window.removeEventListener('scroll', parallax);
+        }
+        // If videoManager exists, avoid initializing heavy video logic on small devices
+        if (typeof videoManager !== 'undefined' && videoManager && videoManager.videos) {
+            // Pause and hide existing videos
+            try {
+                document.querySelectorAll('.video-background video').forEach(v => {
+                    v.pause();
+                    v.removeAttribute && v.removeAttribute('autoplay');
+                    v.style.display = 'none';
+                });
+            } catch (e) {}
+        }
+
+        // Stop resource-heavy animations triggered by JS
+        // For typing animation, reduce tick intervals by stopping it (cleaner on small screens)
+        if (typeof typingAnimation === 'function') {
+            // override with a no-op to avoid repeated timeouts
+            typingAnimation = function(){};
+        }
+    }
+
+    // Keep terminal/image toggles accessible but lightweight
+});
+
 // Terminal close
 terminalClose.addEventListener('click', () => {
     terminal.classList.remove('active');
