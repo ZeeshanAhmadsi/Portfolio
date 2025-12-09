@@ -6972,3 +6972,25 @@ img {
     
     .card-hover, .glass-section, .glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 }
+
+/* Ensure mobile nav does not accidentally block content and force sections visible */
+@media (max-width: 1024px) {
+    .nav-container { visibility: hidden; pointer-events: none; }
+    .nav-container.active { visibility: visible; pointer-events: auto; }
+
+    /* Make sections visible above lightweight overlays but below header */
+    section, #about, #certificates {
+        position: relative !important;
+        z-index: 95 !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Reduce expensive skill animations on low-width devices */
+    .skills-grid, .skill-card, .skill-card img {
+        animation: none !important;
+        transition: none !important;
+        will-change: auto !important;
+    }
+}
