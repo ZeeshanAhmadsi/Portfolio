@@ -307,6 +307,22 @@ body::before {
     .section-title h2 { font-size: 1.5rem !important; }
 
     
+    #certificates .certificates-grid { 
+        display: grid !important; 
+        grid-template-columns: 1fr !important; 
+        padding: 1rem !important;
+        gap: 1rem !important;
+    }
+    #certificates .certificate-card { 
+        width: 100% !important; 
+        max-width: 100% !important;
+    }
+    #certificates .certificate-image { 
+        width: 100% !important; 
+        height: 180px !important;
+    }
+
+    
     .card-hover { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
     .glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 }
@@ -462,7 +478,8 @@ body::before {
     #certificates .certificates-grid { 
         display: grid !important; 
         grid-template-columns: 1fr !important; 
-        padding: 0 !important;
+        padding: 1.5rem !important;
+        gap: 1.5rem !important;
     }
     #certificates .certificate-card { 
         width: 100% !important; 
