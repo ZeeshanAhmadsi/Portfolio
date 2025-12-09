@@ -194,10 +194,6 @@ body::before {
     * { animation: none !important; }
     body { overflow-x: hidden !important; }
 
-    /* Disable video backgrounds entirely on mobile - major performance blocker */
-    .video-background, .video-background video, .video-overlay { display: none !important; }
-    .page-wrapper { background: var(--bg-primary) !important; }
-
     
     header { height: 64px !important; }
     nav { padding: 0 1rem !important; }
@@ -313,18 +309,12 @@ body::before {
     
     .card-hover { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
     .glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-    .glass-section { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; box-shadow: none !important; }
-    .about-content { box-shadow: none !important; }
 }
 
 
 @media (min-width: 481px) and (max-width: 768px) {
     * { animation: none !important; }
     body { overflow-x: hidden !important; }
-
-    /* Disable video backgrounds entirely on tablet - major performance blocker */
-    .video-background, .video-background video, .video-overlay { display: none !important; }
-    .page-wrapper { background: var(--bg-primary) !important; }
 
     
     header { height: 80px !important; }
@@ -440,12 +430,9 @@ body::before {
     
     .card-hover { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
     .glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-    .glass-section { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; box-shadow: none !important; }
-    #about .about-content { box-shadow: none !important; }
-}
 
-
-@media (min-width: 769px) { 
+    
+    #about .about-content { 
         display: flex !important; 
         flex-direction: column !important; 
         grid-template-columns: unset !important;
