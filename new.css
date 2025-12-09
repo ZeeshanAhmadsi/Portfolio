@@ -289,6 +289,10 @@ body::before {
     .skill-item-horizontal img { width: 40px !important; height: 40px !important; }
     .skill-name { font-size: 0.75rem !important; text-align: center !important; }
 
+    .skills-grid, .skill-card, .skill-card img, .skill-card .skill-name { animation: none !important; transition: none !important; will-change: auto !important; filter: none !important; box-shadow: none !important; }
+    .skill-card { transform: none !important; opacity: 1 !important; }
+    .skill-card:hover { transform: none !important; }
+
     
     .experience-timeline { padding-left: 0.5rem !important; }
     .experience-item { margin-bottom: 1.5rem !important; padding: 0 !important; }
@@ -405,6 +409,10 @@ body::before {
     }
     .skill-item-horizontal img { width: 45px !important; height: 45px !important; }
     .skill-name { font-size: 0.8rem !important; text-align: center !important; }
+
+    .skills-grid, .skill-card, .skill-card img, .skill-card .skill-name { animation: none !important; transition: none !important; will-change: auto !important; filter: none !important; box-shadow: none !important; }
+    .skill-card { transform: none !important; opacity: 1 !important; }
+    .skill-card:hover { transform: none !important; }
 
     
     .experience-timeline { padding-left: 1.5rem !important; }

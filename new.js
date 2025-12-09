@@ -157,16 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         
         try {
-            const skillImgs = document.querySelectorAll('.skills-row img');
+            const skillImgs = document.querySelectorAll('.skill-item-horizontal img');
             skillImgs.forEach(img => {
                 if (!img.dataset.src) img.dataset.src = img.src || '';
-                
                 img.removeAttribute('src');
-                img.setAttribute('loading', 'lazy');
                 img.classList.add('deferred-skill');
             });
 
-            
             if ('IntersectionObserver' in window) {
                 const skillObserver = new IntersectionObserver((entries, obs) => {
                     entries.forEach(entry => {
@@ -180,17 +177,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             obs.unobserve(el);
                         }
                     });
-                }, { rootMargin: '200px 0px' });
+                }, { rootMargin: '150px 0px' });
 
-                document.querySelectorAll('.skills-row img.deferred-skill').forEach(i => skillObserver.observe(i));
+                document.querySelectorAll('.skill-item-horizontal img.deferred-skill').forEach(i => skillObserver.observe(i));
             } else {
-                
                 setTimeout(() => {
-                    document.querySelectorAll('.skills-row img.deferred-skill').forEach(i => {
+                    document.querySelectorAll('.skill-item-horizontal img.deferred-skill').forEach(i => {
                         if (i.dataset.src) i.src = i.dataset.src;
                         i.classList.remove('deferred-skill');
                     });
-                }, 1500);
+                }, 2000);
             }
         } catch (e) {  }
     }
