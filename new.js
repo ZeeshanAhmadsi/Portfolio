@@ -1,4 +1,4 @@
-// Terminal functionality
+
 const terminal = document.querySelector('.terminal');
 const terminalToggle = document.querySelector('.terminal-toggle');
 const terminalClose = document.querySelector('.terminal-close');
@@ -11,7 +11,7 @@ let isMinimized = false;
 let isMaximized = false;
 let originalStyles = {};
 
-// Terminal commands
+
 const commands = {
     help: () => `Available commands:
 - help: Show this help message
@@ -77,7 +77,7 @@ Programming:
     }
 };
 
-// Terminal toggle
+
 terminalToggle.addEventListener('click', () => {
     terminal.classList.toggle('active');
     if (terminal.classList.contains('active')) {
@@ -85,13 +85,13 @@ terminalToggle.addEventListener('click', () => {
     }
 });
 
-// Mobile menu toggle (keeps nav usable on small screens)
+
 document.addEventListener('DOMContentLoaded', () => {
     const mobileBtn = document.querySelector('.mobile-menu-btn');
     const navContainer = document.querySelector('.nav-container');
     if (!mobileBtn || !navContainer) return;
 
-    // Toggle menu on button click
+    
     mobileBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         navContainer.classList.toggle('active');
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Close menu when a link is clicked
+    
     navContainer.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => {
             navContainer.classList.remove('active');
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Close menu when clicking outside
+    
     document.addEventListener('click', (e) => {
         if (!navContainer.contains(e.target) && !mobileBtn.contains(e.target)) {
             if (navContainer.classList.contains('active')) {
@@ -129,24 +129,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Performance improvements for mobile/tablet
+
 document.addEventListener('DOMContentLoaded', () => {
     const isSmall = window.innerWidth <= 1024;
 
-    // Lazy-load images to reduce initial load and repaint cost
+    
     try {
         document.querySelectorAll('img').forEach(img => {
             if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
         });
-    } catch (e) { /* ignore */ }
+    } catch (e) {  }
 
-    // Disable heavy JS-driven effects on smaller devices
+    
     if (isSmall) {
-        // expose flags for other init code to read
+        
         window.__isSmall = true;
         window.__disableTyping = true;
 
-        // If video elements exist, pause and hide them to reduce CPU/paint
+        
         try {
             document.querySelectorAll('.video-background video').forEach(v => {
                 try { v.pause(); } catch(e){}
@@ -155,18 +155,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch (e) {}
 
-        // Defer loading many small skill icons to reduce initial network and paint on mobile
+        
         try {
             const skillImgs = document.querySelectorAll('.skills-row img');
             skillImgs.forEach(img => {
                 if (!img.dataset.src) img.dataset.src = img.src || '';
-                // remove immediate src so browser won't fetch until we set it back
+                
                 img.removeAttribute('src');
                 img.setAttribute('loading', 'lazy');
                 img.classList.add('deferred-skill');
             });
 
-            // IntersectionObserver to load skill icons when they enter viewport
+            
             if ('IntersectionObserver' in window) {
                 const skillObserver = new IntersectionObserver((entries, obs) => {
                     entries.forEach(entry => {
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 document.querySelectorAll('.skills-row img.deferred-skill').forEach(i => skillObserver.observe(i));
             } else {
-                // Fallback: load icons after short delay
+                
                 setTimeout(() => {
                     document.querySelectorAll('.skills-row img.deferred-skill').forEach(i => {
                         if (i.dataset.src) i.src = i.dataset.src;
@@ -192,18 +192,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }, 1500);
             }
-        } catch (e) { /* ignore */ }
+        } catch (e) {  }
     }
 
-    // Keep terminal/image toggles accessible but lightweight
+    
 });
 
-// Terminal close
+
 terminalClose.addEventListener('click', () => {
     terminal.classList.remove('active');
 });
 
-// Terminal minimize
+
 function toggleMinimize() {
     if (!isMinimized) {
         originalStyles.height = terminal.style.height;
@@ -218,7 +218,7 @@ function toggleMinimize() {
     }
 }
 
-// Terminal maximize
+
 function toggleMaximize() {
     if (!isMaximized) {
         originalStyles = {
@@ -245,7 +245,7 @@ function toggleMaximize() {
 terminalMinimize.addEventListener('click', toggleMinimize);
 terminalMaximize.addEventListener('click', toggleMaximize);
 
-// Make terminal draggable
+
 const terminalHeader = document.querySelector('.terminal-header');
 let isDragging = false;
 let currentX;
@@ -294,13 +294,13 @@ function dragEnd() {
     isDragging = false;
 }
 
-// Terminal input handling
+
 terminalInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         const command = terminalInput.value.trim().toLowerCase();
         terminalInput.value = '';
 
-        // Add command to terminal
+        
         const commandLine = document.createElement('div');
         commandLine.className = 'terminal-line';
         commandLine.innerHTML = `
@@ -309,7 +309,7 @@ terminalInput.addEventListener('keypress', (e) => {
         `;
         terminalContent.appendChild(commandLine);
 
-        // Process command
+        
         let response = '';
         if (commands[command]) {
             response = commands[command]();
@@ -317,7 +317,7 @@ terminalInput.addEventListener('keypress', (e) => {
             response = `Command not found: ${command}\nType 'help' to see available commands`;
         }
 
-        // Add response to terminal
+        
         if (response) {
             const responseLine = document.createElement('div');
             responseLine.className = 'terminal-line';
@@ -325,19 +325,19 @@ terminalInput.addEventListener('keypress', (e) => {
             terminalContent.appendChild(responseLine);
         }
 
-        // Scroll to bottom
+        
         terminalContent.scrollTop = terminalContent.scrollHeight;
     }
 });
 
-// Focus input when clicking terminal
+
 terminal.addEventListener('click', (e) => {
     if (!e.target.closest('.terminal-controls') && !isMinimized) {
         terminalInput.focus();
     }
 });
 
-// Terminal functionality
+
 document.addEventListener('DOMContentLoaded', function() {
   const terminalToggle = document.querySelector('.terminal-toggle');
   const terminalContainer = document.querySelector('.terminal-container');
@@ -358,20 +358,20 @@ document.addEventListener('DOMContentLoaded', function() {
       left: terminalContainer.style.left
   };
 
-  // Toggle terminal visibility
+  
   terminalToggle.addEventListener('click', () => {
       if (terminalContainer.style.display === 'block') {
           terminalContainer.style.display = 'none';
       } else {
           terminalContainer.style.display = 'block';
           terminalInput.focus();
-          // Reset to normal view when opening
+          
           if (isMinimized) toggleMinimize();
           if (isMaximized) toggleMaximize();
       }
   });
 
-  // Make terminal draggable
+  
   const terminalHeader = document.querySelector('.terminal-header');
   terminalHeader.addEventListener('mousedown', (e) => {
       if (e.target.classList.contains('terminal-btn')) return;
@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
       terminalContainer.style.cursor = 'default';
   });
 
-  // Minimize functionality
+  
   function toggleMinimize() {
       if (isMinimized) {
           terminalContainer.classList.remove('minimized');
@@ -402,41 +402,41 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
           terminalContainer.classList.add('minimized');
           isMinimized = true;
-          // If maximized, also exit maximize mode
+          
           if (isMaximized) toggleMaximize();
       }
   }
 
-  // Maximize functionality
+  
   function toggleMaximize() {
       if (isMaximized) {
           terminalContainer.classList.remove('maximized');
-          // Restore original dimensions
+          
           Object.keys(originalDimensions).forEach(dim => {
               terminalContainer.style[dim] = originalDimensions[dim];
           });
           isMaximized = false;
       } else {
-          // Save original dimensions
+          
           originalDimensions = {
               width: terminalContainer.style.width,
               height: terminalContainer.style.height,
               top: terminalContainer.style.top,
               left: terminalContainer.style.left
           };
-          // Maximize
+          
           terminalContainer.classList.add('maximized');
           terminalContainer.style.width = '90%';
           terminalContainer.style.height = '90vh';
           terminalContainer.style.top = '5vh';
           terminalContainer.style.left = '5%';
           isMaximized = true;
-          // If minimized, also exit minimize mode
+          
           if (isMinimized) toggleMinimize();
       }
   }
 
-  // Button event listeners
+  
   closeBtn.addEventListener('click', () => {
       terminalContainer.style.display = 'none';
   });
@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   maximizeBtn.addEventListener('click', toggleMaximize);
 
-  // Command definitions
+  
   const commands = {
       help: {
           description: 'Show available commands',
@@ -505,13 +505,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   };
 
-  // Process commands
+  
   terminalInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
           const command = terminalInput.value.trim();
           terminalInput.value = '';
           
-          // Add command to output
+          
           const commandLine = document.createElement('div');
           commandLine.className = 'terminal-line';
           commandLine.innerHTML = `
@@ -520,35 +520,35 @@ document.addEventListener('DOMContentLoaded', function() {
           `;
           terminalOutput.appendChild(commandLine);
           
-          // Process command
+          
           let response = '<span class="terminal-response">Command not found. Type <span class="terminal-command">help</span> for available commands.</span>';
           const cmd = command.split(' ')[0].toLowerCase();
           
           if (commands[cmd]) {
               const result = commands[cmd].execute();
               if (result) response = `<span class="terminal-response">${result}</span>`;
-              else return; // Some commands handle their own output
+              else return; 
           }
           
-          // Add response to output
+          
           if (response) {
               const responseLine = document.createElement('div');
               responseLine.innerHTML = response;
               terminalOutput.appendChild(responseLine);
           }
           
-          // Scroll to bottom
+          
           terminalOutput.scrollTop = terminalOutput.scrollHeight;
       }
   });
 
-  // Focus input when terminal is clicked
+  
   terminalContainer.addEventListener('click', () => {
       terminalInput.focus();
   });
 });
 
-// Skills Animation
+
 document.addEventListener('DOMContentLoaded', function() {
     const skillItems = document.querySelectorAll('.skill-item');
     
@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 skillItem.classList.add('in-view');
                 progressBar.style.setProperty('--progress', progress + '%');
                 
-                // Stop observing after animation
+                
                 observer.unobserve(skillItem);
             }
         });
@@ -579,14 +579,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Update the typing animation
+
 const typingAnimation = () => {
     if (window.__disableTyping) return;
     const isSmall = window.innerWidth <= 1024;
     const animatedText = document.querySelector('.animated-text');
     if (!animatedText) return;
 
-    // On mobile, just display the full text without animation
+    
     if (isSmall) {
         animatedText.textContent = 'Zeeshan Ahmad Siddiqui';
         return;
@@ -631,7 +631,7 @@ const typingAnimation = () => {
     type();
 };
 
-// Enhanced Skills Animation
+
 const skillsAnimation = () => {
     const skillItems = document.querySelectorAll('.skill-item');
     
@@ -648,16 +648,16 @@ const skillsAnimation = () => {
                 const progress = skillItem.dataset.progress;
                 const progressBar = skillItem.querySelector('.skill-progress');
                 
-                // Add animation class
+                
                 skillItem.classList.add('animate-in');
                 
-                // Animate progress bar
+                
                 setTimeout(() => {
                     progressBar.style.width = `${progress}%`;
                     progressBar.style.opacity = '1';
                 }, 200);
                 
-                // Stop observing after animation
+                
                 observer.unobserve(skillItem);
             }
         });
@@ -668,13 +668,13 @@ const skillsAnimation = () => {
     });
 };
 
-// Initialize animations when DOM is loaded
+
 document.addEventListener('DOMContentLoaded', () => {
     typingAnimation();
     skillsAnimation();
 });
 
-// Intersection Observer for scroll animations
+
 const createObserver = (elements, className, threshold = 0.2) => {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -688,7 +688,7 @@ const createObserver = (elements, className, threshold = 0.2) => {
     elements.forEach(el => observer.observe(el));
 };
 
-// Smooth scroll for navigation links
+
 const smoothScroll = (target) => {
     const element = document.querySelector(target);
     const headerOffset = 80;
@@ -701,7 +701,7 @@ const smoothScroll = (target) => {
     });
 };
 
-// Parallax effect for hero section
+
 const parallax = () => {
     const hero = document.querySelector('.hero-section');
     window.addEventListener('scroll', () => {
@@ -711,7 +711,7 @@ const parallax = () => {
     });
 };
 
-// Navbar scroll effect
+
 const navbarEffect = () => {
     const header = document.querySelector('header');
     let lastScroll = 0;
@@ -735,7 +735,7 @@ const navbarEffect = () => {
     });
 };
 
-// Mouse move effect for hero section
+
 const mouseMoveEffect = () => {
     const hero = document.querySelector('.hero-section');
     hero.addEventListener('mousemove', (e) => {
@@ -763,7 +763,7 @@ const mouseMoveEffect = () => {
     });
 };
 
-// Video Background Optimization
+
 const videoManager = {
     init() {
         this.videos = {
@@ -792,14 +792,14 @@ const videoManager = {
             });
         }, options);
 
-        // Observe sections
+        
         document.querySelectorAll('section').forEach(section => {
             observer.observe(section);
         });
     },
 
     setupVideoOptimization() {
-        // Handle video quality based on connection speed
+        
         if (navigator.connection) {
             const connection = navigator.connection;
             if (connection.effectiveType === '4g') {
@@ -817,7 +817,7 @@ const videoManager = {
             });
         }
 
-        // Handle visibility changes
+        
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.pauseInactiveVideos();
@@ -826,7 +826,7 @@ const videoManager = {
             }
         });
 
-        // Handle resize events for mobile optimization
+        
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
@@ -855,18 +855,18 @@ const videoManager = {
         }
 
         if (previousVideo !== nextVideo) {
-            // Fade out previous video
+            
             previousVideo.style.opacity = '0';
             previousVideo.setAttribute('aria-hidden', 'true');
 
-            // Fade in next video
+            
             nextVideo.style.opacity = '1';
             nextVideo.setAttribute('aria-hidden', 'false');
             
-            // Update current video
+            
             this.currentVideo = sectionId === 'home' ? 'main' : sectionId;
 
-            // Ensure video is playing
+            
             const video = nextVideo.querySelector('video');
             if (video.paused) {
                 video.play().catch(() => {});
@@ -914,7 +914,7 @@ const videoManager = {
     }
 };
 
-// Move terminal to bottom right
+
 document.addEventListener('DOMContentLoaded', function() {
     const terminalContainer = document.querySelector('.terminal-container');
     if (terminalContainer) {
@@ -924,7 +924,7 @@ document.addEventListener('DOMContentLoaded', function() {
         terminalContainer.style.zIndex = '1000';
     }
     
-    // Initialize all features (skip heavy ones on small devices)
+    
     const __isSmall = window.__isSmall || window.innerWidth <= 1024;
     if (!__isSmall) {
         try { videoManager.init(); } catch(e) {}
@@ -944,7 +944,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try { mouseMoveEffect(); } catch(e) {}
     }
     
-    // Smooth scroll for navigation
+    
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
             e.preventDefault();
@@ -953,14 +953,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Remove all existing social media link handlers
+
 document.querySelectorAll('.social-link').forEach(link => {
-    // Remove any existing click handlers
+    
     const clone = link.cloneNode(true);
     link.parentNode.replaceChild(clone, link);
 });
 
-// Make social links clickable
+
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.social-link').forEach(link => {
         link.style.cursor = 'pointer';
@@ -973,7 +973,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Contact Form Handling
+
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.querySelector('.form-status');
@@ -982,7 +982,7 @@ document.addEventListener('DOMContentLoaded', function() {
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Show loading state
+            
             const submitButton = contactForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.innerHTML;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
@@ -1014,7 +1014,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formStatus.textContent = 'Sorry, there was an error sending your message. Please try again later.';
                 formStatus.style.color = '#f44336';
             } finally {
-                // Reset button state
+                
                 submitButton.innerHTML = originalButtonText;
                 submitButton.disabled = false;
             }
