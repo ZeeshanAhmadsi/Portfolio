@@ -154,6 +154,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 v.style.display = 'none';
             });
         } catch (e) {}
+
+        // Defer loading many small skill icons to reduce initial network and paint on mobile
+        try {
+            const skillImgs = document.querySelectorAll('.skills-row img');
+            skillImgs.forEach(img => {
+                if (!img.dataset.src) img.dataset.src = img.src || '';
+                // remove immediate src so browser won't fetch until we set it back
+                img.removeAttribute('src');
+                img.setAttribute('loading', 'lazy');
+                img.classList.add('deferred-skill');
+            });
+
+            // IntersectionObserver to load skill icons when they enter viewport
+            if ('IntersectionObserver' in window) {
+                const skillObserver = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const el = entry.target;
+                            if (el.dataset.src) {
+                                el.src = el.dataset.src;
+                                el.removeAttribute('data-src');
+                            }
+                            el.classList.remove('deferred-skill');
+                            obs.unobserve(el);
+                        }
+                    });
+                }, { rootMargin: '200px 0px' });
+
+                document.querySelectorAll('.skills-row img.deferred-skill').forEach(i => skillObserver.observe(i));
+            } else {
+                // Fallback: load icons after short delay
+                setTimeout(() => {
+                    document.querySelectorAll('.skills-row img.deferred-skill').forEach(i => {
+                        if (i.dataset.src) i.src = i.dataset.src;
+                        i.classList.remove('deferred-skill');
+                    });
+                }, 1500);
+            }
+        } catch (e) { /* ignore */ }
     }
 
     // Keep terminal/image toggles accessible but lightweight

@@ -6963,3 +6963,17 @@ img {
         object-fit: cover !important;
     }
 }
+
+/* Ensure About and Certificates are visible above overlays on small screens */
+@media (max-width: 1024px) {
+    #about, #certificates {
+        position: relative !important;
+        z-index: 1001 !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* reduce expensive visuals that can cause jank */
+    .card-hover, .glass-section, .glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
