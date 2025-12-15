@@ -71,6 +71,13 @@ body::before {
     z-index: -1;
 }
 
+/* Make media and images scale down on small viewports */
+img, picture, video, svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -1111,7 +1118,7 @@ nav {
         position: fixed;
         top: 80px;
         left: 0;
-        width: 100vw;
+        width: 100%;
         height: calc(100vh - 80px);
         background-color: rgba(17, 24, 39, 0.99);
         flex-direction: column;
