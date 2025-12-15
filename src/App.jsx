@@ -67,6 +67,12 @@ const skills = [
   { name: 'Bootstrap', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg' },
 ];
 
+const heroBadges = [
+  { label: 'MERN', value: 'Full Stack' },
+  { label: 'DevOps', value: 'Docker · CI/CD' },
+  { label: 'AI/ML', value: 'Vision · NLP' },
+];
+
 const projects = [
   {
     title: 'Zerodha hub',
@@ -76,6 +82,7 @@ const projects = [
     image: '/assets/Screenshot 2025-10-30 021324.png',
     code: 'https://github.com/ZeeshanAhmadsi/Tradenest',
     demo: '',
+    category: ['Full-stack', 'FinTech'],
   },
   {
     title: 'Sign Language to Text Converter',
@@ -85,6 +92,7 @@ const projects = [
     image: '/assets/Screenshot 2025-10-30 014841.png',
     code: 'https://github.com/ZeeshanAhmadsi/Sign-Language-to-Text-using-CNN',
     demo: 'https://sign-language-demo.herokuapp.com',
+    category: ['AI/ML', 'Computer Vision'],
   },
   {
     title: 'NeuroShell AI Platform',
@@ -94,6 +102,7 @@ const projects = [
     image: '/assets/Screenshot 2025-10-30 024735.png',
     code: 'https://github.com/ZeeshanAhmadsi/NeuroShell',
     demo: 'https://neuroshell-ai.com',
+    category: ['AI/ML', 'Platform'],
   },
   {
     title: 'Wanderlust',
@@ -103,6 +112,7 @@ const projects = [
     image: '/assets/Screenshot 2025-07-29 012604.png',
     code: 'https://github.com/ZeeshanAhmadsi/WanderLust',
     demo: 'https://wanderlust-5lfj.onrender.com',
+    category: ['Full-stack', 'Marketplace'],
   },
 ];
 
@@ -138,6 +148,13 @@ const socials = [
   { icon: 'fab fa-linkedin', href: 'https://linkedin.com/in/zeeshan-ahmad-siddiqui', label: 'LinkedIn' },
   { icon: 'fab fa-instagram', href: 'https://www.instagram.com/zeeshanahmad.si', label: 'Instagram' },
   { icon: 'fas fa-code', href: 'https://leetcode.com/u/khanzeeshan84854/', label: 'LeetCode' },
+];
+
+const quickContacts = [
+  { icon: 'fas fa-envelope', label: 'Email', href: 'mailto:khanzeeshan84854@gmail.com' },
+  { icon: 'fab fa-linkedin', label: 'LinkedIn', href: 'https://linkedin.com/in/zeeshan-ahmad-siddiqui' },
+  { icon: 'fab fa-github', label: 'GitHub', href: 'https://github.com/ZeeshanAhmadsi' },
+  { icon: 'fas fa-phone', label: 'Call', href: 'tel:+919302357085' },
 ];
 
 const terminalCommands = {
@@ -342,7 +359,9 @@ export default function App() {
   const [navOpen, setNavOpen] = useState(false);
   const [typedText, setTypedText] = useState('Zeeshan Ahmad Siddiqui');
   const [terminalOpen, setTerminalOpen] = useState(false);
-  const [contactStatus, setContactStatus] = useState('');
+  const [contactStatus, setContactStatus] = useState({ text: '', type: '' });
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [activeSection, setActiveSection] = useState('home');
   const typingRef = useRef({ index: 0, char: 0, deleting: false });
 
   const handleScrollTo = (id) => {
@@ -378,7 +397,26 @@ export default function App() {
       sectionObserver.observe(el);
     });
 
-    return () => sectionObserver.disconnect();
+    // Active nav tracker
+    const activeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id === 'home' ? 'about' : entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.45 },
+    );
+
+    document.querySelectorAll('section[id]').forEach((section) => {
+      activeObserver.observe(section);
+    });
+
+    return () => {
+      sectionObserver.disconnect();
+      activeObserver.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -420,7 +458,7 @@ export default function App() {
       email: form.email.value,
       message: form.message.value,
     };
-    setContactStatus('Sending...');
+    setContactStatus({ text: 'Sending...', type: 'info' });
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -428,10 +466,10 @@ export default function App() {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error('Request failed');
-      setContactStatus('Message sent successfully! I will get back to you soon.');
+      setContactStatus({ text: 'Message sent successfully! I will get back to you soon.', type: 'success' });
       form.reset();
     } catch (err) {
-      setContactStatus('Sorry, there was an error sending your message. Please try again later.');
+      setContactStatus({ text: 'Sorry, there was an error sending your message. Please try again later.', type: 'error' });
     }
   };
 
@@ -458,7 +496,7 @@ export default function App() {
                 <a
                   href={`#${link.id}`}
                   key={link.id}
-                  className="nav-link"
+                  className={`nav-link${activeSection === link.id ? ' active' : ''}`}
                   onClick={(e) => {
                     e.preventDefault();
                     handleScrollTo(link.id);
@@ -499,15 +537,28 @@ export default function App() {
               <h1 className="hero-title">
                 <span className="animated-text">{typedText}</span>
               </h1>
+              <div className="hero-badges">
+                {heroBadges.map((badge) => (
+                  <div className="hero-badge" key={badge.label}>
+                    <span className="badge-label">{badge.label}</span>
+                    <span className="badge-value">{badge.value}</span>
+                  </div>
+                ))}
+              </div>
               <p className="hero-description">
                 I am a Full Stack Developer with hands-on experience in MERN stack development. I’ve built responsive and
                 user-friendly web applications using MongoDB, Express, React, and Node.js. I have worked with databases
                 like MongoDB and SQL. Currently, I’m learning DevOps tools like Docker, CI/CD, and cloud platforms to
                 improve app deployment and performance.
               </p>
-              <button type="button" className="cta-button" onClick={() => handleScrollTo('contact')}>
-                Get In Touch
-              </button>
+              <div className="hero-actions">
+                <button type="button" className="cta-button" onClick={() => handleScrollTo('contact')}>
+                  Get In Touch
+                </button>
+                <button type="button" className="cta-button cta-secondary" onClick={() => handleScrollTo('projects')}>
+                  View Projects
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -586,34 +637,79 @@ export default function App() {
             <div className="section-title">
               <h2>Projects</h2>
             </div>
-            <div className="projects-grid">
-              {projects.map((project) => (
-                <div className="project-card" key={project.title}>
-                  <div className="project-image">
-                    <img src={project.image} alt={project.title} />
-                    <div className="project-overlay" />
+            <div className="project-filters">
+              {['all', 'Full-stack', 'AI/ML', 'FinTech', 'Platform', 'Marketplace', 'Computer Vision'].map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  className={`chip${activeFilter === filter ? ' active' : ''}`}
+                  onClick={() => setActiveFilter(filter)}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+
+            {projects.length > 0 && (
+              <div className="featured-project card-hover">
+                <div className="featured-media">
+                  <img src={projects[0].image} alt={projects[0].title} loading="lazy" />
+                </div>
+                <div className="featured-body">
+                  <div className="eyebrow">Featured</div>
+                  <h3>{projects[0].title}</h3>
+                  <p>{projects[0].description}</p>
+                  <div className="project-tech">
+                    {projects[0].tech.map((tech) => (
+                      <span key={tech}>{tech}</span>
+                    ))}
                   </div>
-                  <div className="project-content">
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <div className="project-tech">
-                      {project.tech.map((tech) => (
-                        <span key={tech}>{tech}</span>
-                      ))}
-                    </div>
-                    <div className="project-links">
-                      <a href={project.code} target="_blank" rel="noopener noreferrer">
-                        <i className="fab fa-github" /> View Code
+                  <div className="project-links">
+                    <a href={projects[0].code} target="_blank" rel="noopener noreferrer">
+                      <i className="fab fa-github" /> View Code
+                    </a>
+                    {projects[0].demo && (
+                      <a href={projects[0].demo} target="_blank" rel="noopener noreferrer">
+                        <i className="fas fa-external-link-alt" /> Live Demo
                       </a>
-                      {project.demo && (
-                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                          <i className="fas fa-external-link-alt" /> Live Demo
-                        </a>
-                      )}
-                    </div>
+                    )}
                   </div>
                 </div>
-              ))}
+              </div>
+            )}
+
+            <div className="projects-grid">
+              {projects
+                .slice(1)
+                .filter((project) => activeFilter === 'all' || project.category.includes(activeFilter))
+                .map((project) => (
+                  <div className="project-card" key={project.title}>
+                    <div className="project-image">
+                      <img src={project.image} alt={project.title} />
+                      <div className="project-overlay" />
+                    </div>
+                    <div className="project-content">
+                      <div className="eyebrow">{project.category.join(' · ')}</div>
+                      <h3>{project.title}</h3>
+                      <p>{project.description}</p>
+                      <div className="project-tech">
+                        {project.tech.map((tech) => (
+                          <span key={tech}>{tech}</span>
+                        ))}
+                      </div>
+                      <div className="project-links">
+                        <a href={project.code} target="_blank" rel="noopener noreferrer">
+                          <i className="fab fa-github" /> View Code
+                        </a>
+                        {project.demo && (
+                          <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                            <i className="fas fa-external-link-alt" /> Live Demo
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </section>
@@ -679,6 +775,13 @@ export default function App() {
                 I'm currently looking for new opportunities and would love to hear from you. Whether you have a question
                 or just want to say hi, I'll try my best to get back to you!
               </p>
+              <div className="contact-actions">
+                {quickContacts.map((item) => (
+                  <a key={item.label} className="contact-chip" href={item.href} target="_blank" rel="noopener noreferrer">
+                    <i className={item.icon} /> {item.label}
+                  </a>
+                ))}
+              </div>
               <form onSubmit={handleContactSubmit} className="contact-form">
                 <div className="form-group">
                   <label htmlFor="name">Name</label>
@@ -696,7 +799,9 @@ export default function App() {
                   <span>Send Message</span>
                   <i className="fas fa-paper-plane" />
                 </button>
-                {contactStatus && <p className="form-status">{contactStatus}</p>}
+                {contactStatus.text && (
+                  <p className={`form-status ${contactStatus.type}`}>{contactStatus.text}</p>
+                )}
               </form>
             </div>
           </div>
