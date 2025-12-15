@@ -6349,10 +6349,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .skills-row {
     display: flex;
-    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
     padding: 1rem 2rem;
-    animation: slideSkillsRow 40s linear infinite;
-    width: max-content;
+    animation: none;
+    width: 100%;
 }
 
 
