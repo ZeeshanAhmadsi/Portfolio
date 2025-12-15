@@ -156,39 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {}
 
         
-        try {
-            const skillImgs = document.querySelectorAll('.skill-item-horizontal img');
-            skillImgs.forEach(img => {
-                if (!img.dataset.src) img.dataset.src = img.src || '';
-                img.removeAttribute('src');
-                img.classList.add('deferred-skill');
-            });
-
-            if ('IntersectionObserver' in window) {
-                const skillObserver = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const el = entry.target;
-                            if (el.dataset.src) {
-                                el.src = el.dataset.src;
-                                el.removeAttribute('data-src');
-                            }
-                            el.classList.remove('deferred-skill');
-                            obs.unobserve(el);
-                        }
-                    });
-                }, { rootMargin: '150px 0px' });
-
-                document.querySelectorAll('.skill-item-horizontal img.deferred-skill').forEach(i => skillObserver.observe(i));
-            } else {
-                setTimeout(() => {
-                    document.querySelectorAll('.skill-item-horizontal img.deferred-skill').forEach(i => {
-                        if (i.dataset.src) i.src = i.dataset.src;
-                        i.classList.remove('deferred-skill');
-                    });
-                }, 2000);
-            }
-        } catch (e) {  }
+        // Keep skill icons loaded on small screens to avoid missing content/lag
+        // (previously deferred loading by removing src).
     }
 
     
