@@ -12,7 +12,6 @@
     --text-primary: #f3f4f6;
     --text-secondary: #9ca3af;
     --text-accent: #60a5fa;
-    --header-height: 80px;
     
     
     --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
@@ -104,7 +103,7 @@ img, picture, video, svg {
     padding: 100px 0;
     z-index: 2;
     /* Ensure in-page anchors aren't hidden beneath the fixed header */
-    scroll-margin-top: calc(var(--header-height) + 16px);
+    scroll-margin-top: 96px;
 }
 
 .section.visible {
@@ -253,8 +252,7 @@ img, picture, video, svg {
 
     .page-wrapper { padding-top: 64px !important; }
     /* small screens: adjust anchor offset so sections are not hidden behind header */
-    :root { --header-height: 64px !important; }
-    .section { scroll-margin-top: calc(var(--header-height) + 8px) !important; }
+    .section { scroll-margin-top: 64px !important; }
 
     
     main { position: relative !important; z-index: 1 !important; }
@@ -346,8 +344,8 @@ img, picture, video, svg {
         transition: none !important;
     }
     .skill-item-horizontal img { 
-        width: 48px !important; 
-        height: 48px !important;
+        width: 40px !important; 
+        height: 40px !important;
         animation: none !important;
         transform: none !important;
         filter: none !important;
@@ -410,21 +408,11 @@ img, picture, video, svg {
         width: 100% !important; 
         height: 200px !important;
         overflow: hidden !important;
-        min-height: 140px;
-        background: linear-gradient(90deg, rgba(10,13,19,0.02), rgba(10,13,19,0.02));
     }
     #certificates .certificate-image img {
-        display: block !important;
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
-        object-position: center center !important;
-    }
-
-    /* On very small devices allow auto height so details are visible */
-    @media (max-width: 480px) {
-        #certificates .certificate-image { height: auto !important; }
-        #certificates .certificate-image img { height: auto !important; max-height: 360px !important; }
     }
     #certificates .certificate-content {
         padding: 1.25rem !important;
@@ -436,99 +424,8 @@ img, picture, video, svg {
     
     .card-hover { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
     .glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-
-    /* SIMPLE MODE FOR PHONES: remove animations, transitions, heavy filters, and reduce visual complexity */
-    *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-    }
-
-    /* Reduce header height and keep anchor offsets consistent */
-    header { height: 64px !important; }
-    :root { --header-height: 64px !important; }
-
-    /* Remove heavy shadows and gradients for faster rendering */
-    .resume-button, .card-hover, .glass, .logo-section .logo, .section-title h2 {
-        box-shadow: none !important;
-        background: transparent !important;
-        border: none !important;
-    }
-
-    /* Simplify skills layout and ensure stable sizes */
-    .skills-row { gap: 0.4rem !important; }
-    .skill-item-horizontal { flex: 0 0 calc(50% - 0.2rem) !important; max-width: calc(50% - 0.2rem) !important; padding: 0.5rem !important; }
-    .skill-item-horizontal img { width: 40px !important; height: 40px !important; }
-
-    /* Make certificate/project images simple and predictable */
-    #certificates .certificate-image, .project-image { height: auto !important; max-height: 360px !important; overflow: visible !important; }
-    #certificates .certificate-image img, .project-image img { height: auto !important; width: 100% !important; }
-
-    /* Ensure nav does not overlap content on phones */
-    .nav-container { position: static !important; transform: none !important; height: auto !important; background: transparent !important; border: none !important; }
-
-    /* Improve text and layout rendering */
-    body, html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-
-    /* Make header non-fixed to avoid overlaying content */
-    header { position: static !important; top: auto !important; border-bottom: none !important; }
-    .hero-title .animated-text { animation: none !important; }
-
-    /* Hide terminal and controls on simple phones */
-    .terminal-toggle { display: none !important; }
-    .terminal-container { display: none !important; }
-
-    /* Ensure contact form fields expand full width */
-    .contact-form .form-group input, .contact-form .form-group textarea { width: 100% !important; box-sizing: border-box !important; }
-    .contact-form .cta-button { width: 100% !important; }
-
-    /* Additional small-screen adjustments */
-    .resume-button { display: block !important; width: calc(100% - 2rem) !important; margin: 0.8rem auto !important; padding: 0.75rem 1rem !important; border-radius: 10px !important; box-shadow: none !important; }
-
-    /* Make sections tighter on phones to reduce scrolling length */
-    section { padding: 30px 0 !important; }
-
-    /* Certificates: single-column, centered, with taller images for readability */
-    #certificates .certificate-card { display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 0.5rem !important; }
-    #certificates .certificate-image { width: 100% !important; height: auto !important; max-height: 320px !important; overflow: hidden !important; }
-    #certificates .certificate-image img { width: 100% !important; height: auto !important; object-fit: cover !important; }
-    #certificates .certificate-content { padding: 0.75rem 1rem !important; }
-
-    /* Skills: switch to horizontal touch-friendly scroller on phones */
-    .skills-row { display: flex !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; gap: 0.75rem !important; padding: 0.5rem 0.75rem !important; }
-    .skill-item-horizontal { flex: 0 0 auto !important; max-width: none !important; padding: 0.6rem !important; }
-    .skill-item-horizontal .skill-name { font-size: 0.75rem !important; }
-
-    /* Ensure contact section has breathing room */
-    #contact { padding-top: 12px !important; padding-bottom: 40px !important; }
-
 }
 
-/* Strict simple-mode: also apply when JS toggles body.simple-mode (extra safeguard) */
-body.simple-mode * {
-    animation: none !important;
-    transition: none !important;
-    will-change: auto !important;
-}
-body.simple-mode header { position: static !important; height: auto !important; border-bottom: none !important; }
-body.simple-mode .nav-container { position: static !important; transform: none !important; background: transparent !important; }
-body.simple-mode .terminal-toggle, body.simple-mode .terminal-container { display: none !important; }
-body.simple-mode .hero-title .animated-text { display: inline !important; animation: none !important; }
-body.simple-mode .skills-row { gap: 0.4rem !important; }
-body.simple-mode .skill-item-horizontal { flex: 0 0 calc(50% - 0.2rem) !important; max-width: calc(50% - 0.2rem) !important; }
-body.simple-mode .skill-item-horizontal img { width: 40px !important; height: 40px !important; }
-body.simple-mode .skills-row { overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 0.6rem !important; padding: 0.5rem 0.75rem !important; }
-body.simple-mode .skill-item-horizontal { contain: layout; -webkit-tap-highlight-color: transparent; flex: 0 0 auto !important; }
-body.simple-mode .skills-row::-webkit-scrollbar { display: none; }
-body.simple-mode .resume-button { display: block !important; width: calc(100% - 2rem) !important; margin: 0.8rem auto !important; }
-body.simple-mode #certificates .certificate-card { flex-direction: column !important; align-items: center !important; text-align: center !important; }
-body.simple-mode #certificates .certificate-image { height: auto !important; max-height: 320px !important; }
-body.simple-mode #contact { padding-bottom: 40px !important; }
-body.simple-mode #certificates .certificate-image, body.simple-mode .project-image { height: auto !important; max-height: 360px !important; overflow: visible !important; }
-body.simple-mode #certificates .certificate-image img, body.simple-mode .project-image img { height: auto !important; width: 100% !important; display: block !important; }
-body.simple-mode .contact-form .form-group input, body.simple-mode .contact-form .form-group textarea { width: 100% !important; box-sizing: border-box !important; }
-body.simple-mode .contact-form .cta-button { width: 100% !important; }
-body.simple-mode .resume-button, body.simple-mode .card-hover, body.simple-mode .glass, body.simple-mode .logo-section .logo, body.simple-mode .section-title h2 { box-shadow: none !important; background: transparent !important; border: none !important; }
-body.simple-mode img { image-rendering: -webkit-optimize-contrast !important; }
 
 @media (min-width: 481px) and (max-width: 768px) {
     * { animation: none !important; }

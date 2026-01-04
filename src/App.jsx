@@ -349,25 +349,15 @@ export default function App() {
     setNavOpen(false);
     const el = document.getElementById(id);
     if (el) {
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      const y = el.getBoundingClientRect().top + window.pageYOffset - headerHeight - 8;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   useEffect(() => {
-    // Lazy load images but prioritize skill icons for immediate visual stability
+    // Lazy load all images
     document.querySelectorAll('img').forEach((img) => {
-      if (img.closest('.skill-item-horizontal')) {
-        img.setAttribute('decoding', 'async');
-        img.setAttribute('loading', 'eager');
-        if (!img.getAttribute('width')) img.setAttribute('width', '48');
-        if (!img.getAttribute('height')) img.setAttribute('height', '48');
-      } else {
-        if (!img.getAttribute('loading')) {
-          img.setAttribute('loading', 'lazy');
-        }
+      if (!img.getAttribute('loading')) {
+        img.setAttribute('loading', 'lazy');
       }
     });
 
@@ -384,41 +374,17 @@ export default function App() {
       { threshold: 0.2 },
     );
 
-    // On very small phones, disable intersection observer to avoid jank and reveal all sections immediately
-    if (typeof window !== 'undefined' && window.innerWidth <= 480) {
-      document.querySelectorAll('.section, .project-card').forEach((el) => {
-        el.classList.add('visible');
-      });
-    } else {
-      // Observe larger elements only to reduce cost on mobile devices (skills are static)
-      document.querySelectorAll('.section, .project-card').forEach((el) => {
-        sectionObserver.observe(el);
-      });
-    }
+    // Observe larger elements only to reduce cost on mobile devices (skills are static)
+    document.querySelectorAll('.section, .project-card').forEach((el) => {
+      sectionObserver.observe(el);
+    });
 
     return () => sectionObserver.disconnect();
-  }, []);
-
-  // Simple mode for very small screens: add a body class and update on resize
-  useEffect(() => {
-    const setSimpleMode = () => {
-      if (typeof window === 'undefined') return;
-      const isSimple = window.innerWidth <= 480 || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      document.body.classList.toggle('simple-mode', isSimple);
-    };
-    setSimpleMode();
-    window.addEventListener('resize', setSimpleMode);
-    return () => window.removeEventListener('resize', setSimpleMode);
   }, []);
 
   useEffect(() => {
     // Typing animation
     const texts = ['Zeeshan Ahmad Siddiqui', 'Full Stack Developer'];
-    // Disable typing animation on simple phones or when the user prefers reduced motion
-    if (typeof window !== 'undefined' && (window.innerWidth <= 480 || window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-      setTypedText(texts[0]);
-      return;
-    }
     const tick = () => {
       const state = typingRef.current;
       const currentText = texts[state.index];
@@ -607,15 +573,7 @@ export default function App() {
               <div className="skills-row">
                 {skills.map((skill) => (
                   <div className="skill-item-horizontal" key={skill.name}>
-                    <img
-                      src={skill.icon}
-                      alt={skill.name}
-                      width="48"
-                      height="48"
-                      loading="eager"
-                      decoding="async"
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                    />
+                    <img src={skill.icon} alt={skill.name} />
                     <span className="skill-name">{skill.name}</span>
                   </div>
                 ))}
@@ -670,14 +628,7 @@ export default function App() {
               {certificates.map((certificate) => (
                 <div className="certificate-card" key={certificate.title}>
                   <div className="certificate-image">
-                    <img
-                      className="certificate-img"
-                      src={encodeURI(certificate.image)}
-                      alt={certificate.title}
-                      loading="lazy"
-                      decoding="async"
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                    />
+                    <img src={certificate.image} alt={certificate.title} />
                     <div className="certificate-overlay" />
                   </div>
                   <div className="certificate-content">
