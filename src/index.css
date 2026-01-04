@@ -481,6 +481,26 @@ img, picture, video, svg {
     .contact-form .form-group input, .contact-form .form-group textarea { width: 100% !important; box-sizing: border-box !important; }
     .contact-form .cta-button { width: 100% !important; }
 
+    /* Additional small-screen adjustments */
+    .resume-button { display: block !important; width: calc(100% - 2rem) !important; margin: 0.8rem auto !important; padding: 0.75rem 1rem !important; border-radius: 10px !important; box-shadow: none !important; }
+
+    /* Make sections tighter on phones to reduce scrolling length */
+    section { padding: 30px 0 !important; }
+
+    /* Certificates: single-column, centered, with taller images for readability */
+    #certificates .certificate-card { display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 0.5rem !important; }
+    #certificates .certificate-image { width: 100% !important; height: auto !important; max-height: 320px !important; overflow: hidden !important; }
+    #certificates .certificate-image img { width: 100% !important; height: auto !important; object-fit: cover !important; }
+    #certificates .certificate-content { padding: 0.75rem 1rem !important; }
+
+    /* Skills: switch to horizontal touch-friendly scroller on phones */
+    .skills-row { display: flex !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; gap: 0.75rem !important; padding: 0.5rem 0.75rem !important; }
+    .skill-item-horizontal { flex: 0 0 auto !important; max-width: none !important; padding: 0.6rem !important; }
+    .skill-item-horizontal .skill-name { font-size: 0.75rem !important; }
+
+    /* Ensure contact section has breathing room */
+    #contact { padding-top: 12px !important; padding-bottom: 40px !important; }
+
 }
 
 /* Strict simple-mode: also apply when JS toggles body.simple-mode (extra safeguard) */
@@ -496,9 +516,13 @@ body.simple-mode .hero-title .animated-text { display: inline !important; animat
 body.simple-mode .skills-row { gap: 0.4rem !important; }
 body.simple-mode .skill-item-horizontal { flex: 0 0 calc(50% - 0.2rem) !important; max-width: calc(50% - 0.2rem) !important; }
 body.simple-mode .skill-item-horizontal img { width: 40px !important; height: 40px !important; }
-body.simple-mode .skills-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-body.simple-mode .skill-item-horizontal { contain: layout; -webkit-tap-highlight-color: transparent; }
+body.simple-mode .skills-row { overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 0.6rem !important; padding: 0.5rem 0.75rem !important; }
+body.simple-mode .skill-item-horizontal { contain: layout; -webkit-tap-highlight-color: transparent; flex: 0 0 auto !important; }
 body.simple-mode .skills-row::-webkit-scrollbar { display: none; }
+body.simple-mode .resume-button { display: block !important; width: calc(100% - 2rem) !important; margin: 0.8rem auto !important; }
+body.simple-mode #certificates .certificate-card { flex-direction: column !important; align-items: center !important; text-align: center !important; }
+body.simple-mode #certificates .certificate-image { height: auto !important; max-height: 320px !important; }
+body.simple-mode #contact { padding-bottom: 40px !important; }
 body.simple-mode #certificates .certificate-image, body.simple-mode .project-image { height: auto !important; max-height: 360px !important; overflow: visible !important; }
 body.simple-mode #certificates .certificate-image img, body.simple-mode .project-image img { height: auto !important; width: 100% !important; display: block !important; }
 body.simple-mode .contact-form .form-group input, body.simple-mode .contact-form .form-group textarea { width: 100% !important; box-sizing: border-box !important; }
