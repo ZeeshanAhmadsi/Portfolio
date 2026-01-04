@@ -374,7 +374,8 @@ export default function App() {
       { threshold: 0.2 },
     );
 
-    document.querySelectorAll('.section, .project-card, .skill-item-horizontal').forEach((el) => {
+    // Observe larger elements only to reduce cost on mobile devices (skills are static)
+    document.querySelectorAll('.section, .project-card').forEach((el) => {
       sectionObserver.observe(el);
     });
 
