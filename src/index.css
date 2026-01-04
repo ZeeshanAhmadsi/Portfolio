@@ -469,8 +469,42 @@ img, picture, video, svg {
     /* Improve text and layout rendering */
     body, html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 
+    /* Make header non-fixed to avoid overlaying content */
+    header { position: static !important; top: auto !important; border-bottom: none !important; }
+    .hero-title .animated-text { animation: none !important; }
+
+    /* Hide terminal and controls on simple phones */
+    .terminal-toggle { display: none !important; }
+    .terminal-container { display: none !important; }
+
+    /* Ensure contact form fields expand full width */
+    .contact-form .form-group input, .contact-form .form-group textarea { width: 100% !important; box-sizing: border-box !important; }
+    .contact-form .cta-button { width: 100% !important; }
+
 }
 
+/* Strict simple-mode: also apply when JS toggles body.simple-mode (extra safeguard) */
+body.simple-mode * {
+    animation: none !important;
+    transition: none !important;
+    will-change: auto !important;
+}
+body.simple-mode header { position: static !important; height: auto !important; border-bottom: none !important; }
+body.simple-mode .nav-container { position: static !important; transform: none !important; background: transparent !important; }
+body.simple-mode .terminal-toggle, body.simple-mode .terminal-container { display: none !important; }
+body.simple-mode .hero-title .animated-text { display: inline !important; animation: none !important; }
+body.simple-mode .skills-row { gap: 0.4rem !important; }
+body.simple-mode .skill-item-horizontal { flex: 0 0 calc(50% - 0.2rem) !important; max-width: calc(50% - 0.2rem) !important; }
+body.simple-mode .skill-item-horizontal img { width: 40px !important; height: 40px !important; }
+body.simple-mode .skills-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+body.simple-mode .skill-item-horizontal { contain: layout; -webkit-tap-highlight-color: transparent; }
+body.simple-mode .skills-row::-webkit-scrollbar { display: none; }
+body.simple-mode #certificates .certificate-image, body.simple-mode .project-image { height: auto !important; max-height: 360px !important; overflow: visible !important; }
+body.simple-mode #certificates .certificate-image img, body.simple-mode .project-image img { height: auto !important; width: 100% !important; display: block !important; }
+body.simple-mode .contact-form .form-group input, body.simple-mode .contact-form .form-group textarea { width: 100% !important; box-sizing: border-box !important; }
+body.simple-mode .contact-form .cta-button { width: 100% !important; }
+body.simple-mode .resume-button, body.simple-mode .card-hover, body.simple-mode .glass, body.simple-mode .logo-section .logo, body.simple-mode .section-title h2 { box-shadow: none !important; background: transparent !important; border: none !important; }
+body.simple-mode img { image-rendering: -webkit-optimize-contrast !important; }
 
 @media (min-width: 481px) and (max-width: 768px) {
     * { animation: none !important; }

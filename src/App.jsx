@@ -349,7 +349,10 @@ export default function App() {
     setNavOpen(false);
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - headerHeight - 8;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
@@ -396,9 +399,26 @@ export default function App() {
     return () => sectionObserver.disconnect();
   }, []);
 
+  // Simple mode for very small screens: add a body class and update on resize
+  useEffect(() => {
+    const setSimpleMode = () => {
+      if (typeof window === 'undefined') return;
+      const isSimple = window.innerWidth <= 480 || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.body.classList.toggle('simple-mode', isSimple);
+    };
+    setSimpleMode();
+    window.addEventListener('resize', setSimpleMode);
+    return () => window.removeEventListener('resize', setSimpleMode);
+  }, []);
+
   useEffect(() => {
     // Typing animation
     const texts = ['Zeeshan Ahmad Siddiqui', 'Full Stack Developer'];
+    // Disable typing animation on simple phones or when the user prefers reduced motion
+    if (typeof window !== 'undefined' && (window.innerWidth <= 480 || window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      setTypedText(texts[0]);
+      return;
+    }
     const tick = () => {
       const state = typingRef.current;
       const currentText = texts[state.index];
@@ -587,7 +607,15 @@ export default function App() {
               <div className="skills-row">
                 {skills.map((skill) => (
                   <div className="skill-item-horizontal" key={skill.name}>
-                    <img src={skill.icon} alt={skill.name} width="48" height="48" loading="eager" decoding="async" />
+                    <img
+                      src={skill.icon}
+                      alt={skill.name}
+                      width="48"
+                      height="48"
+                      loading="eager"
+                      decoding="async"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    />
                     <span className="skill-name">{skill.name}</span>
                   </div>
                 ))}
@@ -642,7 +670,14 @@ export default function App() {
               {certificates.map((certificate) => (
                 <div className="certificate-card" key={certificate.title}>
                   <div className="certificate-image">
-                    <img src={encodeURI(certificate.image)} alt={certificate.title} loading="lazy" decoding="async" />
+                    <img
+                      className="certificate-img"
+                      src={encodeURI(certificate.image)}
+                      alt={certificate.title}
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    />
                     <div className="certificate-overlay" />
                   </div>
                   <div className="certificate-content">
