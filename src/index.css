@@ -436,6 +436,39 @@ img, picture, video, svg {
     
     .card-hover { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
     .glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+
+    /* SIMPLE MODE FOR PHONES: remove animations, transitions, heavy filters, and reduce visual complexity */
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* Reduce header height and keep anchor offsets consistent */
+    header { height: 64px !important; }
+    :root { --header-height: 64px !important; }
+
+    /* Remove heavy shadows and gradients for faster rendering */
+    .resume-button, .card-hover, .glass, .logo-section .logo, .section-title h2 {
+        box-shadow: none !important;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    /* Simplify skills layout and ensure stable sizes */
+    .skills-row { gap: 0.4rem !important; }
+    .skill-item-horizontal { flex: 0 0 calc(50% - 0.2rem) !important; max-width: calc(50% - 0.2rem) !important; padding: 0.5rem !important; }
+    .skill-item-horizontal img { width: 40px !important; height: 40px !important; }
+
+    /* Make certificate/project images simple and predictable */
+    #certificates .certificate-image, .project-image { height: auto !important; max-height: 360px !important; overflow: visible !important; }
+    #certificates .certificate-image img, .project-image img { height: auto !important; width: 100% !important; }
+
+    /* Ensure nav does not overlap content on phones */
+    .nav-container { position: static !important; transform: none !important; height: auto !important; background: transparent !important; border: none !important; }
+
+    /* Improve text and layout rendering */
+    body, html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
 }
 
 

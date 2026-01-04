@@ -381,10 +381,17 @@ export default function App() {
       { threshold: 0.2 },
     );
 
-    // Observe larger elements only to reduce cost on mobile devices (skills are static)
-    document.querySelectorAll('.section, .project-card').forEach((el) => {
-      sectionObserver.observe(el);
-    });
+    // On very small phones, disable intersection observer to avoid jank and reveal all sections immediately
+    if (typeof window !== 'undefined' && window.innerWidth <= 480) {
+      document.querySelectorAll('.section, .project-card').forEach((el) => {
+        el.classList.add('visible');
+      });
+    } else {
+      // Observe larger elements only to reduce cost on mobile devices (skills are static)
+      document.querySelectorAll('.section, .project-card').forEach((el) => {
+        sectionObserver.observe(el);
+      });
+    }
 
     return () => sectionObserver.disconnect();
   }, []);
