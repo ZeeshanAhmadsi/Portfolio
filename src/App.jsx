@@ -354,10 +354,17 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Lazy load all images
+    // Lazy load images but prioritize skill icons for immediate visual stability
     document.querySelectorAll('img').forEach((img) => {
-      if (!img.getAttribute('loading')) {
-        img.setAttribute('loading', 'lazy');
+      if (img.closest('.skill-item-horizontal')) {
+        img.setAttribute('decoding', 'async');
+        img.setAttribute('loading', 'eager');
+        if (!img.getAttribute('width')) img.setAttribute('width', '48');
+        if (!img.getAttribute('height')) img.setAttribute('height', '48');
+      } else {
+        if (!img.getAttribute('loading')) {
+          img.setAttribute('loading', 'lazy');
+        }
       }
     });
 
@@ -573,7 +580,7 @@ export default function App() {
               <div className="skills-row">
                 {skills.map((skill) => (
                   <div className="skill-item-horizontal" key={skill.name}>
-                    <img src={skill.icon} alt={skill.name} />
+                    <img src={skill.icon} alt={skill.name} width="48" height="48" loading="eager" decoding="async" />
                     <span className="skill-name">{skill.name}</span>
                   </div>
                 ))}
@@ -628,7 +635,7 @@ export default function App() {
               {certificates.map((certificate) => (
                 <div className="certificate-card" key={certificate.title}>
                   <div className="certificate-image">
-                    <img src={certificate.image} alt={certificate.title} />
+                    <img src={encodeURI(certificate.image)} alt={certificate.title} loading="lazy" decoding="async" />
                     <div className="certificate-overlay" />
                   </div>
                   <div className="certificate-content">

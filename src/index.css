@@ -12,6 +12,7 @@
     --text-primary: #f3f4f6;
     --text-secondary: #9ca3af;
     --text-accent: #60a5fa;
+    --header-height: 80px;
     
     
     --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
@@ -103,7 +104,7 @@ img, picture, video, svg {
     padding: 100px 0;
     z-index: 2;
     /* Ensure in-page anchors aren't hidden beneath the fixed header */
-    scroll-margin-top: 96px;
+    scroll-margin-top: calc(var(--header-height) + 16px);
 }
 
 .section.visible {
@@ -252,7 +253,8 @@ img, picture, video, svg {
 
     .page-wrapper { padding-top: 64px !important; }
     /* small screens: adjust anchor offset so sections are not hidden behind header */
-    .section { scroll-margin-top: 64px !important; }
+    :root { --header-height: 64px !important; }
+    .section { scroll-margin-top: calc(var(--header-height) + 8px) !important; }
 
     
     main { position: relative !important; z-index: 1 !important; }
@@ -344,8 +346,8 @@ img, picture, video, svg {
         transition: none !important;
     }
     .skill-item-horizontal img { 
-        width: 40px !important; 
-        height: 40px !important;
+        width: 48px !important; 
+        height: 48px !important;
         animation: none !important;
         transform: none !important;
         filter: none !important;
@@ -408,11 +410,21 @@ img, picture, video, svg {
         width: 100% !important; 
         height: 200px !important;
         overflow: hidden !important;
+        min-height: 140px;
+        background: linear-gradient(90deg, rgba(10,13,19,0.02), rgba(10,13,19,0.02));
     }
     #certificates .certificate-image img {
+        display: block !important;
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
+        object-position: center center !important;
+    }
+
+    /* On very small devices allow auto height so details are visible */
+    @media (max-width: 480px) {
+        #certificates .certificate-image { height: auto !important; }
+        #certificates .certificate-image img { height: auto !important; max-height: 360px !important; }
     }
     #certificates .certificate-content {
         padding: 1.25rem !important;
