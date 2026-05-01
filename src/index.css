@@ -4,30 +4,25 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-    
-    --bg-primary: #0a0d13;
-    --bg-secondary: #111827;
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
     --accent-primary: #3b82f6;
-    --accent-secondary: #10b981;
-    --text-primary: #f3f4f6;
-    --text-secondary: #9ca3af;
-    --text-accent: #60a5fa;
+    --accent-secondary: #0ea5e9;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-accent: #38bdf8;
     
-    
-    --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
-    --gradient-hover: linear-gradient(135deg, #60a5fa 0%, #34d399 100%);
-    --gradient-dark: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
-    
+    --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 100%);
+    --gradient-hover: linear-gradient(135deg, #2563eb 0%, #0284c7 100%);
+    --gradient-dark: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
     
     --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     
-    
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    
     
     --blur-sm: blur(4px);
     --blur-md: blur(8px);
@@ -317,50 +312,7 @@ img, picture, video, svg {
     .project-links a { font-size: 0.85rem !important; padding: 0.5rem 0.8rem !important; }
 
     
-    .skills-container { 
-        padding: 0 !important; 
-        overflow: visible !important;
-    }
-    .skills-row { 
-        display: flex !important; 
-        flex-wrap: wrap !important; 
-        gap: 0.6rem !important; 
-        justify-content: center !important;
-        animation: none !important;
-        transform: none !important;
-        will-change: auto !important;
-    }
-    .skill-item-horizontal {
-        flex: 0 0 calc(50% - 0.3rem) !important; 
-        max-width: calc(50% - 0.3rem) !important;
-        display: flex !important; 
-        flex-direction: column !important; 
-        align-items: center !important;
-        justify-content: center !important; 
-        gap: 0.5rem !important;
-        padding: 1rem 0.5rem !important;
-        animation: none !important;
-        transform: none !important;
-        transition: none !important;
-    }
-    .skill-item-horizontal img { 
-        width: 40px !important; 
-        height: 40px !important;
-        animation: none !important;
-        transform: none !important;
-        filter: none !important;
-    }
-    .skill-item-horizontal:hover {
-        transform: none !important;
-    }
-    .skill-item-horizontal:hover img {
-        transform: none !important;
-        filter: none !important;
-    }
-    .skill-name { 
-        font-size: 0.75rem !important; 
-        text-align: center !important; 
-    }
+
 
     .skills-grid, .skill-card, .skill-card img, .skill-card .skill-name { 
         animation: none !important; 
@@ -542,50 +494,7 @@ img, picture, video, svg {
     .project-links a { font-size: 0.9rem !important; padding: 0.6rem 0.95rem !important; }
 
     
-    .skills-container { 
-        padding: 0 !important; 
-        overflow: visible !important;
-    }
-    .skills-row { 
-        display: flex !important; 
-        flex-wrap: wrap !important; 
-        gap: 0.75rem !important; 
-        justify-content: center !important;
-        animation: none !important;
-        transform: none !important;
-        will-change: auto !important;
-    }
-    .skill-item-horizontal {
-        flex: 0 0 calc(33.333% - 0.5rem) !important; 
-        max-width: calc(33.333% - 0.5rem) !important;
-        display: flex !important; 
-        flex-direction: column !important; 
-        align-items: center !important;
-        justify-content: center !important; 
-        gap: 0.6rem !important;
-        padding: 1rem 0.5rem !important;
-        animation: none !important;
-        transform: none !important;
-        transition: none !important;
-    }
-    .skill-item-horizontal img { 
-        width: 45px !important; 
-        height: 45px !important;
-        animation: none !important;
-        transform: none !important;
-        filter: none !important;
-    }
-    .skill-item-horizontal:hover {
-        transform: none !important;
-    }
-    .skill-item-horizontal:hover img {
-        transform: none !important;
-        filter: none !important;
-    }
-    .skill-name { 
-        font-size: 0.8rem !important; 
-        text-align: center !important; 
-    }
+
 
     .skills-grid, .skill-card, .skill-card img, .skill-card .skill-name { 
         animation: none !important; 
@@ -868,7 +777,7 @@ nav {
     align-items: center;
     gap: 0.75rem;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, #7f5af0 0%, #2cb67d 100%);
+    background: var(--gradient-primary);
     color: #ffffff;
     font-size: 1.1rem;
     font-weight: 600;
@@ -893,7 +802,7 @@ nav {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #a685fa 0%, #53e6a6 100%);
+    background: var(--gradient-hover);
     transition: left 0.4s ease;
     z-index: -1;
 }
@@ -935,7 +844,7 @@ nav {
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #7f5af0 0%, #2cb67d 50%, #7f5af0 100%);
+    background: var(--gradient-primary);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -970,7 +879,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #7f5af0 0%, #2cb67d 100%);
+    background: var(--gradient-primary);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: -1;
@@ -1433,9 +1342,6 @@ nav {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 500;
     display: inline-block;
-    transform: translateY(30px);
-    opacity: 0;
-    animation: fadeInUp 0.5s ease forwards;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.05em;
 }
@@ -1446,9 +1352,6 @@ nav {
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 2rem;
-    transform: translateY(30px);
-    opacity: 0;
-    animation: fadeInUp 0.5s ease forwards 0.2s;
     color: #ffffff;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     letter-spacing: -0.02em;
@@ -1482,9 +1385,6 @@ nav {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     color: #ffffff;
     margin-bottom: 2rem;
-    transform: translateY(30px);
-    opacity: 0;
-    animation: fadeInUp 0.5s ease forwards 0.4s;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -1494,9 +1394,6 @@ nav {
     max-width: 800px;
     margin-bottom: 3rem;
     line-height: 1.8;
-    transform: translateY(30px);
-    opacity: 0;
-    animation: fadeInUp 0.5s ease forwards 0.6s;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     font-weight: 300;
     letter-spacing: 0.02em;
@@ -1832,6 +1729,68 @@ nav {
     position: relative;
     overflow: hidden;
     animation: slideSkills 30s linear infinite;
+}
+
+.skills-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: 2rem 0;
+    width: 100%;
+}
+
+.skills-marquee {
+    display: inline-flex;
+    animation: marquee 30s linear infinite !important;
+    width: max-content;
+}
+
+@media (hover: hover) {
+    .skills-container:hover .skills-marquee {
+        animation-play-state: paused;
+    }
+}
+
+.skills-row {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 0.75rem;
+    flex-wrap: nowrap;
+}
+
+.skill-item-horizontal {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+}
+
+.skill-item-horizontal img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.skill-item-horizontal:hover {
+    transform: translateY(-5px);
+    background: var(--gradient-dark);
+}
+
+.skill-item-horizontal:hover img {
+    transform: scale(1.1);
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 
@@ -5777,9 +5736,8 @@ footer::before {
 
 
 .certificate-card {
-    animation: cardEntry 0.6s ease forwards;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 @keyframes cardEntry {
@@ -5792,13 +5750,6 @@ footer::before {
         transform: translateY(0);
     }
 }
-
-
-.certificate-card:nth-child(1) { animation-delay: 0.2s; }
-.certificate-card:nth-child(2) { animation-delay: 0.4s; }
-.certificate-card:nth-child(3) { animation-delay: 0.6s; }
-
-
 @media (max-width: 768px) {
     .certificates-grid {
         grid-template-columns: 1fr !important;
@@ -7158,10 +7109,7 @@ img {
     .projects-grid { display: block !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
     .project-card { width: 100% !important; max-width: 100% !important; margin: 0 0 1.25rem 0 !important; }
 
-    
-    .skills-container { width: 100% !important; padding: 0 !important; }
-    .skills-row { width: 100% !important; display: flex !important; flex-wrap: wrap !important; gap: 0.6rem !important; }
-    .skill-item-horizontal { flex: 0 0 calc(50% - 0.3rem) !important; }
+
 
     
     .about-text { width: 100% !important; }
@@ -7192,9 +7140,7 @@ img {
     .projects-grid { display: block !important; width: 100% !important; padding: 0 !important; }
     .project-card { width: 100% !important; max-width: 100% !important; }
 
-    
-    .skills-container { width: 100% !important; }
-    .skill-item-horizontal { flex: 0 0 calc(33.333% - 0.5rem) !important; }
+
 
     
     .about-content { width: 100% !important; }
